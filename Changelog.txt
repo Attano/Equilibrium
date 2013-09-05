@@ -1,0 +1,28 @@
+< ------------------------ >
+<                                
+<
+<       Equilibrium 2.0
+<         Changelog
+<
+< 
+< ------------------------ >
+
+<<< ------------------------------
+--- September 5, Thursday 2013 ---
+<<< ------------------------------
+
+- Initial Push:
+
+> 2v2,3v3,4v4 Config Basics prepared.
+> EQ 2.0 "Start-up" Plugins uploaded along with Source.
+> Stripper Files: Finished (for now)
+
+- Silly Quick-Upload:
+
+> Added this Changelog.txt
+> Added PlannedFeatures.txt
+> Added Missing source+plugin for l4d2_melee_fix
+> Added Missing Gamedata for Notankautoaim
+> Removed useless Plugin (Already!)
+
+
