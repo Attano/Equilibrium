@@ -25,4 +25,13 @@
 > Added Missing Gamedata for Notankautoaim
 > Removed useless Plugin (Already!)
 
+<<< ------------------------------
+---  September 6, Friday 2013  ---
+<<< ------------------------------
+
+- Quickie #1:
+
+> Replaced witch_damage_announce with l4d_witch_damage_announce (Added Source+SMX)
+> Added Modified Unsilent Jockey.
+> Added Modified Spec Stays Spec
 
