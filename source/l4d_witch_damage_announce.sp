@@ -28,6 +28,8 @@
 * - Last Fix for Damage/Percentages; not adding up to 1000/100%.
 * - Changed print format a bit.
 * 
+* Version 1.1c
+* - Removed the witch FF code since it logically belongs to the si_ff_block plugin
 */
 
 new const TEAM_SURVIVOR = 2;
@@ -50,7 +52,6 @@ new Handle: g_hCvarWitchHealth       = INVALID_HANDLE;
 new g_iSurvivorLimit = 4;   
 
 //Handles Cvars
-new Handle:cvar_allow_witch_scratch;
 new Handle:cvar_witch_true_damage;
 
 public Plugin:myinfo = 
@@ -58,13 +59,12 @@ public Plugin:myinfo =
     name = "Witch Damage Announce",
     author = "Sir",
     description = "Print Witch Damage to chat",
-    version = "1.1b",
+    version = "1.1c",
     url = "https://github.com/SirPlease/SirCoding"
 }
 
 public OnPluginStart()
 {
-    cvar_allow_witch_scratch=CreateConVar("witch_block_enrage", "0", "Disable SI from forcing the witch to Attack - 0 = Allow Enrage");
     cvar_witch_true_damage=CreateConVar("witch_show_true_damage", "0", "Show damage output rather than actual damage the witch receives? - 0 = Health Damage");
     
     //In case Witch survives.
@@ -84,29 +84,11 @@ public OnEntityCreated(entity, const String:classname[])
 {
     if (StrEqual(classname, CLASSNAME_WITCH, false))
     {
-        //Hook Witch & Get Health
-        SDKHook(entity, SDKHook_OnTakeDamage, OnTakeDamage);
+        //Get Health
         bWitchSpawned = true;
         bHasPrinted = false;
         g_fWitchHealth = GetConVarFloat(g_hCvarWitchHealth);
     }
-}
-
-public Action:OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &damagetype)
-{
-    //Check if Damage has to be dealt.
-    if (!IsValidClient(attacker)) return Plugin_Continue;
-    
-    if (GetClientTeam(attacker) == 3 && !IsTank(attacker))
-    {
-        if (!GetConVarBool(cvar_allow_witch_scratch))
-        {
-            damage = 0.0; 
-            return Plugin_Changed;
-        }
-        return Plugin_Handled;		
-    }
-    return Plugin_Continue;
 }
 
 public WitchHurt_Event(Handle:event, const String:name[], bool:dontBroadcast)
@@ -335,5 +317,3 @@ ClearDamage()
     for (i = 1; i <= maxplayers; i++) iDamageWitch[i] = 0;
     DamageWitchTotal = 0;
 }
-
-

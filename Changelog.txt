@@ -35,3 +35,29 @@
 > Added Modified Unsilent Jockey.
 > Added Modified Spec Stays Spec
 
+<<< ------------------------------
+---  September 13, 2013  ---
+<<< ------------------------------
+
+- Bringing stuff up to speed(main 4v4 cfg only - for now):
+
+> Completely reorganized the cvars. Native and SM cvars should not be mixed, unless it is vital for a better perception.
+> Replaced l4d2_nospitterduringtank with l4d2_spitter_manager
+> Added Texture Manager Blocker plugin
+> Replaced l4d2_si_slowdown with l4d2_slowdown_control. Also more intuitive cvars.
+> Added an optimized version of Riot Cop Headshot plugin
+> Moved the witch enrage/FF-related code from l4d_witch_damage_announce into l4d2_si_ffblock
+> Added the Drop Secondary plugin. Dead Survivors drop their melee weapons.
+> Added the Tank Pain Fade plugin. Red screen fades for Tanks getting melee owned from behind.
+> Added the Undo Survivor Friendly-Fire plugin. Removed a ton of unrelated stuff, still looks like a mess. But works.
+> Added the Scout Precache plugin. Weapon Limits will handle what was once done by l4d_sniper.
+> Added the Weapon Attributes plugin for some Scout tweaks.
+> Replaced Scoremod with EQ2.0 Scoremod. Details on the forums.
+> Added melee limits. 3 per team will stay as the default value for EQ2.0 4v4 for now.
+> Added the Starting Bacteria plugin. First set of spawns for each team will be vocalized via the oldschool "bacteria" sounds. Only Survivors are able to hear them though.
+
+- Stripper:
+
+> Added the latest set of map changes from ProMod/Customogl 3.3.3.
+> Removed inaccessible pills in a room next to the panic event on DK4.
+> Blocked elevator walls on HR2-3. SI can no longer scratch through them.

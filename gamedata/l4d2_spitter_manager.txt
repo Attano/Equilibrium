@@ -1,0 +1,27 @@
+"Games"
+{
+	"left4dead2"
+	{
+		"Signatures"
+		{
+			/*
+			 * CTerrorPlayer::CullZombie(void)
+			 */
+			"CTerrorPlayer::CullZombie"
+			{
+				"library"	"server"
+				"linux"	"@_ZN13CTerrorPlayer10CullZombieEv"
+				"windows" "\x83\xEC\x2A\x56\x8B\xF1\x8B\x0D\x2A\x2A\x2A\x2A\x57\x56\xE8\x2A\x2A\x2A\x2A\xB0\x2A\x8D\xBE"
+				/* 83 EC ? 56 8B F1 8B 0D ? ? ? ? 57 56 E8 ? ? ? ? B0 ? 8D BE */
+			}
+		}
+		"Offsets"
+		{
+			"CDirector::m_iSelectedTankPlayerId"
+			{
+				"linux"     "732"
+				"windows"   "732"
+			}
+		}
+	}
+}
