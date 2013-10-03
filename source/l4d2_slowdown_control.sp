@@ -2,77 +2,112 @@
 
 #include <sourcemod>
 #include <sdkhooks>
+#include <left4downtown>
 
-new Handle:hCvarSlowdownSi;
-new Handle:hCvarSlowdownTank;
-new Handle:hCvarSlowdownTankLit;
+#define CLAMP(%0,%1,%2) (((%0) > (%2)) ? (%2) : (((%0) < (%1)) ? (%1) : (%0)))
 
-new Float:fSlowdownSi;
-new Float:fSlowdownTank;
-new Float:fSlowdownTankLit;
+new Handle:hCvarSdGunfireSi;
+new Handle:hCvarSdGunfireTank;
+new Handle:hCvarSdInwaterTank;
+new Handle:hCvarSdInwaterSurvivor;
 
-public Plugin:myinfo = {
-    name        = "L4D2 SI Slowdown Control",
-    author      = "Visor; originally by Jahze",
-    version     = "1.3",
-    description = "Manages the slowdown for special infected"
+new Float:fGunfireSi;
+new Float:fGunfireTank;
+new Float:fInWaterTank;
+new Float:fInWaterSurvivor;
+
+public Plugin:myinfo = 
+{
+    name        = "L4D2 Slowdown Control",
+    author      = "Visor",
+    version     = "2.0",
+    description = "Manages the water/gunfire slowdown for both teams"
 };
 
-public OnPluginStart() {
-	hCvarSlowdownSi = CreateConVar("l4d2_slowdown_si", "0.0", "Slowdown from gunfire for SI(-1:default slowdown; 0:no slowdown; >0: velocity multiplier)", FCVAR_PLUGIN);
-	hCvarSlowdownTank = CreateConVar("l4d2_slowdown_tank", "0.0", "Slowdown from gunfire for Tank(-1:default slowdown; 0:no slowdown; >0: velocity multiplier)", FCVAR_PLUGIN); 
-	hCvarSlowdownTankLit = CreateConVar("l4d2_slowdown_lit_tank", "0.0", "Slowdown from gunfire for an ignited Tank(-1:default slowdown; 0:no slowdown; >0: velocity multiplier)", FCVAR_PLUGIN);
+public OnPluginStart() 
+{
+    hCvarSdGunfireSi = CreateConVar("l4d2_slowdown_gunfire_si", "-1", "Slowdown from gunfire for SI(-1: native slowdown; 0: no slowdown; 0.01-0.99: velocity multiplier)", FCVAR_PLUGIN);
+    hCvarSdGunfireTank = CreateConVar("l4d2_slowdown_gunfire_tank", "-1", "Slowdown from gunfire for the Tank(-1: native slowdown; 0: no slowdown; 0.01-0.99: velocity multiplier)", FCVAR_PLUGIN); 
+    hCvarSdInwaterTank = CreateConVar("l4d2_slowdown_water_tank", "-1", "Slowdown in the water for the Tank(-1: native slowdown; 0: no slowdown; 0.01-0.99: velocity multiplier)", FCVAR_PLUGIN); 
+    hCvarSdInwaterSurvivor = CreateConVar("l4d2_slowdown_water_survivors", "-1", "Slowdown in the water for the Survivors(-1: native slowdown; 0: no slowdown; 0.0-0.99: velocity multiplier)", FCVAR_PLUGIN); 
 
-	UpdateCvars();
-
-	HookConVarChange(hCvarSlowdownSi, CvarChanged);
-	HookConVarChange(hCvarSlowdownTank, CvarChanged);
-	HookConVarChange(hCvarSlowdownTankLit, CvarChanged);
+    HookConVarChange(hCvarSdGunfireSi, OnCvarChanged);
+    HookConVarChange(hCvarSdGunfireTank, OnCvarChanged);
+    HookConVarChange(hCvarSdInwaterTank, OnCvarChanged);
+    HookConVarChange(hCvarSdInwaterSurvivor, OnCvarChanged);
 }
 
-UpdateCvars() {
-	fSlowdownSi = GetConVarFloat(hCvarSlowdownSi) == 0.0 ? 1.0 : GetConVarFloat(hCvarSlowdownSi);
-	fSlowdownTank = GetConVarFloat(hCvarSlowdownTank) == 0.0 ? 1.0 : GetConVarFloat(hCvarSlowdownTank);
-	fSlowdownTankLit = GetConVarFloat(hCvarSlowdownTankLit) == 0.0 ? 1.0 : GetConVarFloat(hCvarSlowdownTankLit);
+public OnCvarChanged(Handle:cvar, const String:oldValue[], const String:newValue[]) 
+{
+    OnConfigsExecuted();
 }
 
-public OnClientPutInServer(client) {
+public OnConfigsExecuted()
+{
+    fGunfireSi = ProcessConVar(hCvarSdGunfireSi);
+    fGunfireTank = ProcessConVar(hCvarSdGunfireTank);
+    fInWaterTank = ProcessConVar(hCvarSdInwaterTank);
+    fInWaterSurvivor = ProcessConVar(hCvarSdInwaterSurvivor);
+}
+
+// The old slowdown plugin's cvars weren't quite intuitive, so I'll try to fix it this time
+Float:ProcessConVar(Handle:cvar)
+{
+    new Float:value = GetConVarFloat(cvar);
+    if (value == -1.0)  // native slowdown
+        return -1.0;
+        
+    if (value == 0.0)   // slowdown off
+        return 1.0;
+    
+    return CLAMP(value, 0.01, 1.0); // slowdown multiplier
+}
+
+public OnClientPutInServer(client) 
+{
     SDKHook(client, SDKHook_OnTakeDamagePost, OnTakeDamagePost);
 }
 
-public OnClientDisconnect(client) {
+public OnClientDisconnect(client) 
+{
     SDKUnhook(client, SDKHook_OnTakeDamagePost, OnTakeDamagePost);
 }
 
-public Action:OnTakeDamagePost(victim, &attacker, &inflictor, &Float:damage, &damageType, &weapon, Float:damageForce[3], Float:damagePosition[3]) {
-	new Float:fVelocityModifier = GetVelocityModifierFor(victim);
-	if (fVelocityModifier != -1.0) {
-		SetEntPropFloat(victim, Prop_Send, "m_flVelocityModifier", fVelocityModifier);
-	}
+public L4D2_OnWaterMove(client)
+{
+    if (GetEntityFlags(client) & FL_INWATER)   // failsafe; sometimes it triggers during noclip
+    {
+        ApplySlowdown(client, IsSurvivor(client) ? fInWaterSurvivor : (IsInfected(client) && IsTank(client) ? fInWaterTank : -1.0));
+    }
 }
 
-Float:GetVelocityModifierFor(client) {
-	if (!IsClientInGame(client) || GetClientTeam(client) != 3 )
-		return -1.0;
-
-	new zombieclass = GetEntProp(client, Prop_Send, "m_zombieClass");
-	if (zombieclass == 8) 
-	{
-		if ((GetEntityFlags(client) & FL_ONFIRE) && fSlowdownTankLit > 0.0)
-			return fSlowdownTankLit;
-			
-		if (fSlowdownTank > 0.0)
-			return fSlowdownTank;
-	}
-	else 
-	{	
-		if (fSlowdownSi > 0.0)
-			return fSlowdownSi;
-	}
-	
-	return -1.0;
+public Action:OnTakeDamagePost(victim, &attacker, &inflictor, &Float:damage, &damageType, &weapon, Float:damageForce[3], Float:damagePosition[3]) 
+{
+    if (IsInfected(victim))
+    {
+        ApplySlowdown(victim, IsTank(victim) ? fGunfireTank : fGunfireSi);
+    }
 }
 
-public CvarChanged(Handle:cvar, const String:oldValue[], const String:newValue[]) {
-	UpdateCvars();
+ApplySlowdown(client, Float:value)
+{
+    if (value == -1.0)
+        return;
+      
+    SetEntPropFloat(client, Prop_Send, "m_flVelocityModifier", value);
+}
+
+stock bool:IsSurvivor(client)
+{
+    return client > 0 && client <= MaxClients && IsClientInGame(client) && GetClientTeam(client) == 2;
+}
+
+stock bool:IsInfected(client)
+{
+    return client > 0 && client <= MaxClients && IsClientInGame(client) && GetClientTeam(client) == 3;
+}
+
+stock bool:IsTank(client)
+{
+    return GetEntProp(client, Prop_Send, "m_zombieClass") == 8;
 }

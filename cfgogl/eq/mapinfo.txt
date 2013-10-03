@@ -12,7 +12,7 @@
         "tank_warpto"       "2168.357666 5803.427734 2464.031250"
         "tank_ban_flow_min" "0"
         "tank_ban_flow_max" "82"
-		"max_distance"	    "300"
+        "max_distance"      "300"
     }
     "c1m2_streets"
     {
@@ -31,7 +31,7 @@
         "end_dist"          "200.000000"
         "tank_ban_flow_min" "64"
         "tank_ban_flow_max" "68"
-			"max_distance"      "500"
+        "max_distance"      "500"
     }
     "c1m4_atrium"
     {
@@ -71,7 +71,7 @@
         "end_dist"          "150.000000"
         "tank_ban_flow_min" "55"
         "tank_ban_flow_max" "100"
-		"max_distance"	    "600"
+        "max_distance"      "600"
     }
     "c2m4_barns"
     {
@@ -112,7 +112,7 @@
         "start_dist"        "100.000000"
         "start_extra_dist"  "200.000000"
         "end_dist"          "200.000000"
-		"max_distance"	    "500"
+        "max_distance"      "500"
     }
     "c3m3_shantytown"
     {
@@ -142,7 +142,7 @@
         "start_dist"        "100.000000"
         "start_extra_dist"  "500.000000"
         "end_dist"          "275.000000"
-		"max_distance"	    "300"
+        "max_distance"      "300"
     }
     "c4m2_sugarmill_a"
     {
@@ -306,7 +306,7 @@
         "end_dist"          "336.442200"
         "tank_ban_flow_min" "0"
         "tank_ban_flow_max" "54"
-		"max_distance"	    "200"
+        "max_distance"      "200"
     }
     "c8m2_subway"
     {
@@ -379,7 +379,7 @@
         "end_dist"          "403.989594"
         "tank_ban_flow_min" "0"
         "tank_ban_flow_max" "70"
-		"max_distance"	    "300"
+        "max_distance"      "300"
     }
     "c10m2_drainage"
     {
@@ -388,7 +388,7 @@
         "start_extra_dist"  "399.942505"
         "end_point"         "-8339.282227 -5592.915039 0.031253"
         "end_dist"          "322.081451"
-		"max_distance"	    "400"
+        "max_distance"      "400"
     }
     "c10m3_ranchhouse"
     {
@@ -397,7 +397,7 @@
         "start_extra_dist"  "327.413300"
         "end_point"         "-2673.776611 107.736259 316.727081"
         "end_dist"          "327.768036"
-		"max_distance"	    "500"
+        "max_distance"      "500"
     }
     "c10m4_mainstreet"
     {
@@ -426,7 +426,7 @@
         "start_extra_dist"  "577.638000"
         "end_point"         "5274.120605 2715.548584 88.261955"
         "end_dist"          "314.896759"
-		"max_distance"	    "300"
+        "max_distance"      "300"
     }
     "c11m2_offices"
     {
@@ -475,7 +475,7 @@
         "end_dist"          "275.937225"
         "tank_ban_flow_min" "0"
         "tank_ban_flow_max" "57"
-		"max_distance"	    "200"
+        "max_distance"      "200"
     }
     "c12m2_traintunnel"
     {
@@ -484,7 +484,7 @@
         "start_extra_dist"  "270.500549"
         "end_point"         "-870.702148 -10408.813477 -63.968750"
         "end_dist"          "261.087494"
-		"max_distance"      "400"
+        "max_distance"      "400"
     }
     "c12m3_bridge"
     {
@@ -495,7 +495,7 @@
         "end_dist"          "264.020966"
         "tank_ban_flow_min" "70"
         "tank_ban_flow_max" "100"
-		"max_distance"	    "400"
+        "max_distance"      "400"
     }
     "c12m4_barn"
     {
@@ -776,7 +776,7 @@
         "start_extra_dist"  "277.567169"
         "end_point"         "-1740.397949 9428.968750 437.031250"
         "end_dist"          "180.474869"
-		"max_distance"      "400"
+        "max_distance"      "400"
     }
     "cwm2_warehouse"
     {
@@ -796,7 +796,7 @@
         "start_extra_dist"  "159.655685"
         "end_point"         "3538.319580 -2976.031250 29.974674"
         "end_dist"          "245.566330"
-		"max_distance"      "700"
+        "max_distance"      "700"
     }
     "cwm4_building"
     {
@@ -805,7 +805,7 @@
         "start_extra_dist"  "330.218414"
         "end_point"         "950.599304 91.748909 1784.017456"
         "end_dist"          "1904.152710"
-		"max_distance"      "700"
+        "max_distance"      "700"
     }
     "l4d2_stadium1_apartment"
     {
@@ -816,7 +816,7 @@
         "end_dist"          "133.006638"
         "tank_ban_flow_min" "0"
         "tank_ban_flow_max" "45"
-		"max_distance"      "400"
+        "max_distance"      "400"
     }
     "l4d2_vs_stadium2_riverwalk"
     {
@@ -825,7 +825,7 @@
         "start_extra_dist"  "149.953766"
         "end_point"         "524.056885 10057.031250 -806.850220"
         "end_dist"          "264.000458"
-		"max_distance"      "600"
+        "max_distance"      "600"
     }
     "l4d2_stadium3_city1"
     {
@@ -836,7 +836,7 @@
         "end_dist"          "298.808014"
         "tank_ban_flow_min" "0"
         "tank_ban_flow_max" "40"
-		"max_distance"      "500"
+        "max_distance"      "500"
     }
     "l4d2_stadium4_city2"
     {
@@ -845,7 +845,7 @@
         "start_extra_dist"  "259.126312"
         "end_point"         "-8466.472656 7044.023438 -334.468750"
         "end_dist"          "642.662781"
-		"max_distance"      "600"
+        "max_distance"      "600"
     }
     "l4d2_stadium5_stadium"
     {
@@ -854,7 +854,7 @@
         "start_extra_dist"  "349.691711"
         "end_point"         "-8753.460938 -3717.820068 407.562927"
         "end_dist"          "2375.248535"
-		"max_distance"      "700"
+        "max_distance"      "700"
     }
     "l4d2_city17_01"
     {
@@ -973,7 +973,7 @@
         "start_extra_dist"  "357.132141"
         "end_point"         "2948.021729 7602.731445 -604.782043"
         "end_dist"          "142.267410"
-		"max_distance"      "400"
+        "max_distance"      "400"
     }
     "l4d_dbd2dc_the_mall"
     {
@@ -982,7 +982,7 @@
         "start_extra_dist"  "577.908813"
         "end_point"         "137.894608 5129.338867 -637.909546"
         "end_dist"          "464.308899"
-		"max_distance"      "600"
+        "max_distance"      "600"
     }
     "l4d_dbd2dc_clean_up"
     {
@@ -991,7 +991,7 @@
         "start_extra_dist"  "244.648331"
         "end_point"         "-2060.603027 6556.208496 -671.968750"
         "end_dist"          "286.359802"
-		"max_distance"      "700"
+        "max_distance"      "700"
     }
     "l4d_dbd2dc_undead_center"
     {
@@ -1000,7 +1000,7 @@
         "start_extra_dist"  "188.167191"
         "end_point"         "-7367.650391 8434.535156 -671.968750"
         "end_dist"          "365.062012"
-		"max_distance"      "700"
+        "max_distance"      "700"
     }
     "l4d_dbd2dc_new_dawn"
     {
@@ -1011,7 +1011,7 @@
         "end_dist"          "1558.433960"
         "tank_ban_flow_min" "0"
         "tank_ban_flow_max" "70"
-		"max_distance"      "800"
+        "max_distance"      "800"
     }
     "uf1_boulevard"
     {
@@ -1150,7 +1150,7 @@
         "start_extra_dist"  "1489.374390"
         "end_point"         "-2698.415771 -4883.087402 96.336136"
         "end_dist"          "321.482483"
-		"max_distance"      "400"
+        "max_distance"      "400"
     }
     "plaza_espana"
     {
@@ -1159,7 +1159,7 @@
         "start_extra_dist"  "113.680771"
         "end_point"         "-1100.709839 -8383.968750 -242.025330"
         "end_dist"          "236.288925"
-		"max_distance"      "500"
+        "max_distance"      "500"
     }
     "maria_cristina"
     {
@@ -1168,7 +1168,7 @@
         "start_extra_dist"  "193.511887"
         "end_point"         "-8628.766602 -7242.274902 576.063660"
         "end_dist"          "278.292633"
-		"max_distance"      "500"
+        "max_distance"      "500"
     }
     "mnac"
     {
@@ -1177,7 +1177,7 @@
         "start_extra_dist"  "96.800598"
         "end_point"         "7171.526855 -2417.946289 -1053.332031"
         "end_dist"          "1572.107178"
-		"max_distance"      "800"
+        "max_distance"      "800"
     }
     "jsarena201_town"
     {
