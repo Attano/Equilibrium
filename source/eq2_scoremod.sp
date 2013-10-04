@@ -16,22 +16,19 @@
     'srs.scoringsystem' by AtomicStryker
 **/
 
-new Handle:hCvarSurvivorBonusMultiplier;
-new Handle:hCvarInfectedBonusProportionPermHp;
-new Handle:hCvarInfectedBonusProportionTempHp;
+new Handle:hCvarHealthBonusMultiplier;
+new Handle:hCvarPermanentHealthProportion;
 new Handle:hCvarSurvivalBonus;
 new Handle:hCvarTieBreaker;
 
 new Float:fMapHealthBonus;
-new Float:fSurvPermHpWorth;
-new Float:fInfPermHpWorth;
+new Float:fMapTempHealthBonus;
+new Float:fPermHpWorth;
 new Float:fTempHpWorth;
 new Float:fSurvivorBonus[2];
-new Float:fInfectedBonus[2];
 
 new iTeamSize;
-new iMapDistance;
-new iPermHealth[MAXPLAYERS + 1];
+new iLostTempHealth[2];
 new iTempHealth[MAXPLAYERS + 1];
 
 new bool:bLateLoad;
@@ -42,7 +39,7 @@ public Plugin:myinfo =
     name = "L4D2 Equilibrium 2.0 Scoring System",
     author = "Visor",
     description = "Custom scoring system, designed for Equilibrium 2.0",
-    version = "1.1",
+    version = "1.2",
     url = "https://github.com/Attano/Equilibrium"
 };
 
@@ -54,18 +51,16 @@ public APLRes:AskPluginLoad2(Handle:plugin, bool:late, String:error[], errMax)
 
 public OnPluginStart()
 {
-    hCvarSurvivorBonusMultiplier = CreateConVar("eqsm_survivor_bonus_multiplier", "2.0", "Survivor Health Bonus(applies only to permanent health) = this * Map Distance", FCVAR_PLUGIN, true, 0.25);
-    hCvarInfectedBonusProportionPermHp = CreateConVar("eqsm_infected_bonus_proportion_perm_hp", "0.25", "Infected Damage Bonus(for permanent health) = Map Bonus / 100 * this", FCVAR_PLUGIN);
-    hCvarInfectedBonusProportionTempHp = CreateConVar("eqsm_infected_bonus_proportion_temp_hp", "0.1", "Infected Damage Bonus(for temporary health) = Map Bonus / 100 * this", FCVAR_PLUGIN);
+    hCvarHealthBonusMultiplier = CreateConVar("eqsm_health_bonus_multiplier", "2.0", "Total Survivor Health Bonus = this * Map Distance", FCVAR_PLUGIN, true, 0.25);
+    hCvarPermanentHealthProportion = CreateConVar("eqsm_permament_health_proportion", "0.75", "Permanent Health Bonus = this * Map Bonus; rest goes for Temporary Health Bonus", FCVAR_PLUGIN);
     hCvarSurvivalBonus = FindConVar("vs_survival_bonus");
     hCvarTieBreaker = FindConVar("vs_tiebreak_bonus");
 
-    HookConVarChange(hCvarSurvivorBonusMultiplier, CvarChanged);
-    HookConVarChange(hCvarInfectedBonusProportionPermHp, CvarChanged);
-    HookConVarChange(hCvarInfectedBonusProportionTempHp, CvarChanged);
+    HookConVarChange(hCvarHealthBonusMultiplier, CvarChanged);
+    HookConVarChange(hCvarPermanentHealthProportion, CvarChanged);
 
-    HookEvent("round_start", OnRoundStart, EventHookMode_PostNoCopy);
-    HookEvent("round_end", OnRoundEnd, EventHookMode_PostNoCopy);
+    HookEvent("round_start", EventHook:OnRoundStart, EventHookMode_PostNoCopy);
+    HookEvent("player_ledge_grab", OnPlayerLedgeGrab);
 
     RegConsoleCmd("sm_health", CmdBonus);
     RegConsoleCmd("sm_damage", CmdBonus);
@@ -94,15 +89,17 @@ public OnConfigsExecuted()
     iTeamSize = GetConVarInt(FindConVar("survivor_limit"));
     SetConVarInt(hCvarTieBreaker, 0);
 
-    iMapDistance = L4D2_GetMapValueInt("max_distance", L4D_GetVersusMaxCompletionScore());
+    new iMapDistance = L4D2_GetMapValueInt("max_distance", L4D_GetVersusMaxCompletionScore());
     L4D_SetVersusMaxCompletionScore(iMapDistance);
 
-    fMapHealthBonus = iMapDistance * (GetConVarFloat(hCvarSurvivorBonusMultiplier) / 4/* max survivors */ * iTeamSize);
-    fSurvPermHpWorth = fMapHealthBonus / iTeamSize / 100;
-    fInfPermHpWorth = fMapHealthBonus / 100 * GetConVarFloat(hCvarInfectedBonusProportionPermHp);
-    fTempHpWorth = fMapHealthBonus / 100 * GetConVarFloat(hCvarInfectedBonusProportionTempHp);
+    new Float:fPermHealthProportion = GetConVarFloat(hCvarPermanentHealthProportion);
+    new Float:fTempHealthProportion = 1.0 - fPermHealthProportion;
+    fMapHealthBonus = iMapDistance * (GetConVarFloat(hCvarHealthBonusMultiplier) / 4/* max survivors */ * iTeamSize);
+    fMapTempHealthBonus = iTeamSize * 100/* HP */ / fPermHealthProportion * fTempHealthProportion;
+    fPermHpWorth = fMapHealthBonus / iTeamSize / 100 * fPermHealthProportion;
+    fTempHpWorth = fMapHealthBonus * fTempHealthProportion / fMapTempHealthBonus; // this should be almost equal to the perm hp worth, but for accuracy we'll keep it separately
     #if EQSM_DEBUG
-        PrintToChatAll("\x01Map health bonus: \x05%.1f\x01, surv perm hp worth: \x03%.1f\x01, inf perm hp worth: \x03%.1f\x01, temp hp worth: \x03%.1f\x01", fMapHealthBonus, fSurvPermHpWorth, fInfPermHpWorth, fTempHpWorth);
+        PrintToChatAll("\x01Map health bonus: \x05%.1f\x01, temp health bonus: \x05%.1f\x01, perm hp worth: \x03%.1f\x01, temp hp worth: \x03%.1f\x01", fMapHealthBonus, fMapTempHealthBonus, fPermHpWorth, fTempHpWorth);
     #endif
 }
 
@@ -110,8 +107,8 @@ public OnMapStart()
 {
     OnConfigsExecuted();
     
-    fInfectedBonus[0] = 0.0;
-    fInfectedBonus[1] = 0.0;
+    iLostTempHealth[0] = 0;
+    iLostTempHealth[1] = 0;
 }
 
 public CvarChanged(Handle:convar, const String:oldValue[], const String:newValue[])
@@ -131,32 +128,23 @@ public OnClientDisconnect(client)
     SDKUnhook(client, SDKHook_OnTakeDamagePost, OnTakeDamagePost);
 }
 
-public OnRoundStart(Handle:event, const String:name[], bool:dontBroadcast)
+public OnRoundStart()
 {
     for (new i = 0; i < MAXPLAYERS; i++)
     {
         iTempHealth[i] = 0;
     }
-
-    bRoundOver = false;
 }
 
-public OnRoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
+public Action:L4D_OnFirstSurvivorLeftSafeArea(client)
 {
-    if (bRoundOver == false)
-    {
-        for (new i = 0; i <= InSecondHalfOfRound(); i++)
-        {
-            PrintToChatAll("\x01[\x04EQSM\x01 | Round \x03%i\x01] Survivor Bonus: \x05%d\x01 <\x03%.1f%%\x01> | Infected Bonus: \x05%d\x01", (i + 1), RoundToFloor(fSurvivorBonus[i]), CalculatePerformance(fSurvivorBonus[i]), RoundToFloor(fInfectedBonus[i]));
-        }
-    }
-
-    bRoundOver = true;
+    bRoundOver = false;
 }
 
 public Action:CmdBonus(client, args)
 {
-    ReplyToCommand(client, "\x01[\x04EQSM\x01 | The Road So Far...] R\x03#%i\x01 SB: \x05%d\x01/\x05%d\x01 | IB: \x05%d\x01", InSecondHalfOfRound() + 1, RoundToFloor(GetSurvivorBonus()), RoundToNearest(fMapHealthBonus), RoundToFloor(GetInfectedBonus()));
+    new Float:bonus = GetSurvivorBonus();
+    ReplyToCommand(client, "\x01[\x04EQSM\x01 | The Road So Far...] R\x03#%i\x01 Survivor Bonus: \x05%d\x01/\x05%d\x01 <\x03%.1f%%\x01>", InSecondHalfOfRound() + 1, RoundToFloor(bonus), RoundToNearest(fMapHealthBonus), CalculatePerformance(bonus));
     return Plugin_Handled;
 }
 
@@ -167,12 +155,22 @@ public Action:OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &damage
         return Plugin_Continue;
 
     #if EQSM_DEBUG
-        if (GetSurvivorPermanentHealth(victim) + GetSurvivorTempHealth(victim) > 0) PrintToChatAll("\x01\x04%N\x01 has \x05%d\x01 temp HP now and \x05%d\x01 perm HP(damage: \x03%.1f\x01)", victim, GetSurvivorTempHealth(victim), GetSurvivorPermanentHealth(victim), damage);
+        if (GetSurvivorTemporaryHealth(victim) > 0) PrintToChatAll("\x01\x04%N\x01 has \x05%d\x01 temp HP now(damage: \x03%.1f\x01)", victim, GetSurvivorTemporaryHealth(victim), damage);
     #endif
-    iPermHealth[victim] = GetSurvivorPermanentHealth(victim);
-    iTempHealth[victim] = GetSurvivorTempHealth(victim);
+    iTempHealth[victim] = GetSurvivorTemporaryHealth(victim);
 
     return Plugin_Continue;
+}
+
+public OnPlayerLedgeGrab(Handle:event, const String:name[], bool:dontBroadcast)
+{
+	new client = GetClientOfUserId(GetEventInt(event, "userid"));
+	iLostTempHealth[InSecondHalfOfRound()] += L4D2Direct_GetPreIncapHealthBuffer(client);
+}
+
+public Action:L4D2_OnRevived(client)
+{
+	iLostTempHealth[InSecondHalfOfRound()] -= GetSurvivorTemporaryHealth(client);
 }
 
 // OnTakeDamagePost() does the opposite: it messes up pointer arguments but works fine with the normal ones
@@ -180,17 +178,21 @@ public Action:OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &damage
 // Pawn gets confused and we end up with wrong values
 public OnTakeDamagePost(victim, attacker, inflictor, Float:damage, damagetype)
 {
-    if (iPermHealth[victim] + iTempHealth[victim] < 1 || !IsAnyInfected(attacker) || IsPlayerIncap(victim) || IsPlayerLedged(victim))
+    if (!IsSurvivor(victim) || !IsAnyInfected(attacker))
         return;
-
+        
     #if EQSM_DEBUG
-        PrintToChatAll("\x03%N\x01 lost \x05%i\x01 perm HP and \x05%i\x01 temp HP after being attacked(arg damage: \x03%.1f\x01)", victim, iPermHealth[victim] - (IsPlayerAlive(victim) ? GetSurvivorPermanentHealth(victim) : 0), iTempHealth[victim] - (IsPlayerAlive(victim) ? GetSurvivorTempHealth(victim) : 0), damage);
+        PrintToChatAll("\x03%N\x01\x05 lost %i\x01 temp HP after being attacked(arg damage: \x03%.1f\x01)", victim, iTempHealth[victim] - (IsPlayerAlive(victim) ? GetSurvivorTemporaryHealth(victim) : 0), damage);
     #endif
-    fInfectedBonus[InSecondHalfOfRound()] += (iPermHealth[victim] - (IsPlayerAlive(victim) ? GetSurvivorPermanentHealth(victim) : 0)) * fInfPermHpWorth;
-    fInfectedBonus[InSecondHalfOfRound()] += (iTempHealth[victim] - (IsPlayerAlive(victim) ? GetSurvivorTempHealth(victim) : 0)) * fTempHpWorth;
-    
-    iPermHealth[victim] = GetSurvivorPermanentHealth(victim);
-    iTempHealth[victim] = GetSurvivorTempHealth(victim);
+    if (!IsPlayerAlive(victim) || (IsPlayerIncap(victim) && !IsPlayerLedged(victim)))
+    {
+        iLostTempHealth[InSecondHalfOfRound()] += iTempHealth[victim];
+    }
+    else if (!IsPlayerLedged(victim))
+    {
+        iLostTempHealth[InSecondHalfOfRound()] += iTempHealth[victim] ? (iTempHealth[victim] - GetSurvivorTemporaryHealth(victim)) : 0;
+    }
+    iTempHealth[victim] = IsPlayerIncap(victim) ? 0 : GetSurvivorTemporaryHealth(victim);
 }
 
 public Action:L4D2_OnEndVersusModeRound(bool:countSurvivors)
@@ -198,25 +200,29 @@ public Action:L4D2_OnEndVersusModeRound(bool:countSurvivors)
     #if EQSM_DEBUG
         PrintToChatAll("CDirector::OnEndVersusModeRound() called. InSecondHalfOfRound(): %d, countSurvivors: %d", InSecondHalfOfRound(), countSurvivors);
     #endif
+    if (bRoundOver)
+        return Plugin_Continue;
 
+    fSurvivorBonus[InSecondHalfOfRound()] = GetSurvivorBonus();
     new iSurvivalMultiplier = GetUprightSurvivors();    // I don't know how reliable countSurvivors is and I'm too lazy to test
-    if (iSurvivalMultiplier > 0 || GetSurvivorBonus() >= 1.0)
+    if (iSurvivalMultiplier > 0 && fSurvivorBonus[InSecondHalfOfRound()] >= 1.0)
     {
         /* Survivor bonus */
-        SetConVarInt(hCvarSurvivalBonus, RoundToFloor(GetSurvivorBonus() / iSurvivalMultiplier));
+        SetConVarInt(hCvarSurvivalBonus, RoundToFloor(fSurvivorBonus[InSecondHalfOfRound()] / iSurvivalMultiplier));
         fSurvivorBonus[InSecondHalfOfRound()] = float(GetConVarInt(hCvarSurvivalBonus) * iSurvivalMultiplier);    // workaround for the discrepancy caused by RoundToFloor()
         #if EQSM_DEBUG
             PrintToChatAll("\x01Survival bonus cvar updated. Value: \x05%i\x01 [multiplier: \x05%i\x01]", GetConVarInt(hCvarSurvivalBonus), iSurvivalMultiplier);
         #endif
     }
+    else SetConVarInt(hCvarSurvivalBonus, 0);
     
-    /* Infected bonus */
-    new iInfectedNewScore = L4D2Direct_GetVSCampaignScore(GetInfectedTeamIndex()) + RoundToFloor(GetInfectedBonus());
-    L4D2Direct_SetVSCampaignScore(GetInfectedTeamIndex(), iInfectedNewScore);    // Real(internal) campaign score
-    #if EQSM_DEBUG
-        PrintToChatAll("\x01Infected bonus data updated. Value: \x05%d\x01 [score: \x03%d\x01]", RoundToFloor(GetInfectedBonus()), iInfectedNewScore);
-    #endif
+    // Scores print
+    for (new i = 0; i <= InSecondHalfOfRound(); i++)
+    {
+        PrintToChatAll("\x01[\x04EQSM\x01 | Round \x03%i\x01] Survivor Bonus: \x05%d\x01 <\x03%.1f%%\x01>", (i + 1), RoundToFloor(fSurvivorBonus[i]), CalculatePerformance(fSurvivorBonus[i]));
+    }
 
+    bRoundOver = true;
     return Plugin_Continue;
 }
 
@@ -240,7 +246,11 @@ GetUprightSurvivors()
 
 Float:GetSurvivorBonus()
 {
-    fSurvivorBonus[InSecondHalfOfRound()] = 0.0;
+    new Float:fTempHealthBonus = (fMapTempHealthBonus - float(iLostTempHealth[InSecondHalfOfRound()])) * fTempHpWorth;
+    new Float:fBonus = fTempHealthBonus > 0.0 ? fTempHealthBonus : 0.0;
+    #if EQSM_DEBUG
+        PrintToChatAll("\x01Adding temp hp bonus: \x05%.1f\x01", fTempHealthBonus);
+    #endif
 
     new iSurvivorCount;
     for (new i = 1; i <= MaxClients && iSurvivorCount < iTeamSize; i++)
@@ -250,20 +260,15 @@ Float:GetSurvivorBonus()
             iSurvivorCount++;
             if (IsPlayerAlive(i) && !IsPlayerIncap(i) && !IsPlayerLedged(i))
             {
-                fSurvivorBonus[InSecondHalfOfRound()] += GetSurvivorPermanentHealth(i) * fSurvPermHpWorth;
+                fBonus += GetSurvivorPermanentHealth(i) * fPermHpWorth;
                 #if EQSM_DEBUG
-                    PrintToChatAll("\x01Adding \x05%N's\x01 bonus contribution: \x05%d\x01 perm HP -> \x03%.1f\x01 bonus; new total: \x05%.1f\x01", i, GetSurvivorPermanentHealth(i), GetSurvivorPermanentHealth(i) * fSurvPermHpWorth, fSurvivorBonus[InSecondHalfOfRound()]);
+                    PrintToChatAll("\x01Adding \x05%N's\x01 perm hp bonus contribution: \x05%d\x01 perm HP -> \x03%.1f\x01 bonus; new total: \x05%.1f\x01", i, GetSurvivorPermanentHealth(i), GetSurvivorPermanentHealth(i) * fPermHpWorth, fBonus);
                 #endif
             }
         }
     }
     
-    return fSurvivorBonus[InSecondHalfOfRound()];
-}
-
-Float:GetInfectedBonus()
-{
-    return fInfectedBonus[InSecondHalfOfRound()];
+    return fBonus;
 }
 
 Float:CalculatePerformance(Float:score)
@@ -275,22 +280,17 @@ Float:CalculatePerformance(Float:score)
 /** Stocks **/
 /************/
 
-stock InSecondHalfOfRound()
+InSecondHalfOfRound()
 {
     return GameRules_GetProp("m_bInSecondHalfOfRound");
 }
 
-stock GetInfectedTeamIndex()
-{
-    return GameRules_GetProp("m_bAreTeamsFlipped") ? 0 : 1;
-}
-
-stock bool:IsSurvivor(client)
+bool:IsSurvivor(client)
 {
     return client > 0 && client <= MaxClients && IsClientInGame(client) && GetClientTeam(client) == 2;
 }
 
-stock bool:IsAnyInfected(entity)
+bool:IsAnyInfected(entity)
 {
     if (entity > 0 && entity <= MaxClients)
     {
@@ -308,23 +308,23 @@ stock bool:IsAnyInfected(entity)
     return false;
 }
 
-stock bool:IsPlayerIncap(client)
+bool:IsPlayerIncap(client)
 {
     return bool:GetEntProp(client, Prop_Send, "m_isIncapacitated");
 }
 
-stock bool:IsPlayerLedged(client)
+bool:IsPlayerLedged(client)
 {
     return bool:(GetEntProp(client, Prop_Send, "m_isHangingFromLedge") | GetEntProp(client, Prop_Send, "m_isFallingFromLedge"));
 }
 
-stock GetSurvivorTempHealth(client)
+GetSurvivorTemporaryHealth(client)
 {
     new temphp = RoundToCeil(GetEntPropFloat(client, Prop_Send, "m_healthBuffer") - ((GetGameTime() - GetEntPropFloat(client, Prop_Send, "m_healthBufferTime")) * GetConVarFloat(FindConVar("pain_pills_decay_rate")))) - 1;
     return (temphp > 0 ? temphp : 0);
 }
 
-stock GetSurvivorPermanentHealth(client)
+GetSurvivorPermanentHealth(client)
 {
     // Survivors always have minimum 1 permanent hp
     // so that they don't faint in place just like that when all temp hp run out

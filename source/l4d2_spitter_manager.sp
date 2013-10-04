@@ -39,7 +39,7 @@ public OnPluginStart()
 
     hSdkUpdateGhostClass = EndPrepSDKCall();
     if (hSdkUpdateGhostClass == INVALID_HANDLE)
-    SetFailState("Could not initialize CTerrorPlayer::CullZombie() function");
+        SetFailState("Could not initialize CTerrorPlayer::CullZombie() function");
 
     // Other shit
     hCvarSpitterLimit = FindConVar("z_versus_spitter_limit");
