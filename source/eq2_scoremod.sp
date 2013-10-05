@@ -203,8 +203,8 @@ public Action:L4D2_OnEndVersusModeRound(bool:countSurvivors)
     if (bRoundOver)
         return Plugin_Continue;
 
-    fSurvivorBonus[InSecondHalfOfRound()] = GetSurvivorBonus();
     new iSurvivalMultiplier = GetUprightSurvivors();    // I don't know how reliable countSurvivors is and I'm too lazy to test
+    fSurvivorBonus[InSecondHalfOfRound()] = GetSurvivorBonus(iSurvivalMultiplier);
     if (iSurvivalMultiplier > 0 && fSurvivorBonus[InSecondHalfOfRound()] >= 1.0)
     {
         /* Survivor bonus */
@@ -244,10 +244,10 @@ GetUprightSurvivors()
     return iAliveCount;
 }
 
-Float:GetSurvivorBonus()
+Float:GetSurvivorBonus(countTempHealth = 1)
 {
     new Float:fTempHealthBonus = (fMapTempHealthBonus - float(iLostTempHealth[InSecondHalfOfRound()])) * fTempHpWorth;
-    new Float:fBonus = fTempHealthBonus > 0.0 ? fTempHealthBonus : 0.0;
+    new Float:fBonus = fTempHealthBonus > 0.0 && countTempHealth > 0 ? fTempHealthBonus : 0.0;
     #if EQSM_DEBUG
         PrintToChatAll("\x01Adding temp hp bonus: \x05%.1f\x01", fTempHealthBonus);
     #endif
