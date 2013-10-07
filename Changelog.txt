@@ -79,5 +79,15 @@ Pump: 17 pellets / 15 dmg / pellet scatter values 3.5 / 3.5 (less accurate than 
 > Added a plugin to remove hunter deadstops. Ground hunters can still be shoved though.
 > Improved the Tank Lottery algorithm. Now substitutes will be placed at the back of the tank lottery queue. This way, players that have joined the game earlier will remain 100% eligible for becoming a tank.
 > All finales now have only two event tanks. Distance-based tanks, as well as those that accompany the rescue vehicles, will be blocked.
-> Added an imporved Bot Pop Stop plugin. It relies on the latest Left4Downtown2 extension. Instead of taking the pills away from bots, it blocks them from using them altogether.
-> Revised, fixed and imrpoved the EQ2 Scoremod system.
+> Added an improved Bot Pop Stop plugin. It relies on the latest Left4Downtown2 extension. Instead of taking the pills away from bots, it blocks them from using them altogether.
+> Revised, fixed and improved the EQ2 Scoremod system.
+
+<<< ------------------------------
+---  October 6, 2013        ---
+<<< ------------------------------
+[!] EQ #2 CUP - WEEK 1 FINAL RELEASE
+
+> Updated all Customogl files
+> Added a fix for the Warcelona Survivor death issue
+> Removed static shotgun spread (has some critical issues atm)
+> Updated the Tank slowdown modifier

@@ -1159,7 +1159,7 @@
         "start_extra_dist"  "113.680771"
         "end_point"         "-1100.709839 -8383.968750 -242.025330"
         "end_dist"          "236.288925"
-        "max_distance"      "500"
+        "max_distance"      "700"
     }
     "maria_cristina"
     {
@@ -1168,7 +1168,7 @@
         "start_extra_dist"  "193.511887"
         "end_point"         "-8628.766602 -7242.274902 576.063660"
         "end_dist"          "278.292633"
-        "max_distance"      "500"
+        "max_distance"      "600"
     }
     "mnac"
     {
@@ -1177,7 +1177,7 @@
         "start_extra_dist"  "96.800598"
         "end_point"         "7171.526855 -2417.946289 -1053.332031"
         "end_dist"          "1572.107178"
-        "max_distance"      "800"
+        "max_distance"      "900"
     }
     "jsarena201_town"
     {
