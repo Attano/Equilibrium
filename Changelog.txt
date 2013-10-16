@@ -104,4 +104,20 @@ Pump: 17 pellets / 15 dmg / pellet scatter values 3.5 / 3.5 (less accurate than 
 > Updated the Scoremod. Now it shows HB/DB separately. Plus added a new command: !mapinfo
 > Restored the old Bot Pop Stop. The new one was causing issues.
 
+<<< ------------------------------
+---  October 16, 2013        ---
+<<< ------------------------------
+[!] Warcelona Modifications! Wooh!
+
+---- Plaza Espana (Map 2)
+> Added an Ammo Spawn after the Barricade.
+> Fixed Dynamic Pathing at the end Saferoom (Fencing)
+
+---- Mnac (Map 4/Finale)
+- Fixed Weapon Spawns in the Saferoom, all 3 weapons are available.
+- Fixed Dynamic Pathing, set a static route.
+
+For the Stripper:Source pros, I'm aware the method I used is sloppy, laziness at its best :) ~Sir
+
+
 
