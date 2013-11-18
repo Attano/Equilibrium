@@ -27,7 +27,7 @@ new bool:bVotePassed;
 
 public Plugin:myinfo =
 {
-	name = "L4D2 Boss Percents Standardizer",
+    name = "L4D2 Boss Percents Standardizer",
     author = "Visor",
     version = "1.0",
     description = "Sets predefined boss spawn coordinates from a shared database. Intended for use in cups.",
@@ -88,18 +88,18 @@ bool:StartVote(client, const String:sVoteHeader[])
 
 public VoteActionHandler(Handle:vote, BuiltinVoteAction:action, param1, param2)
 {
-	switch (action)
-	{
-		case BuiltinVoteAction_End:
-		{
-			hVote = INVALID_HANDLE;
-			CloseHandle(vote);
-		}
-		case BuiltinVoteAction_Cancel:
-		{
-			DisplayBuiltinVoteFail(vote, BuiltinVoteFailReason:param1);
-		}
-	}
+    switch (action)
+    {
+        case BuiltinVoteAction_End:
+        {
+            hVote = INVALID_HANDLE;
+            CloseHandle(vote);
+        }
+        case BuiltinVoteAction_Cancel:
+        {
+            DisplayBuiltinVoteFail(vote, BuiltinVoteFailReason:param1);
+        }
+    }
 }
 
 public VoteResultHandler(Handle:vote, num_votes, num_clients, const client_info[][2], num_items, const item_info[][2])
@@ -200,16 +200,16 @@ public OnSocketReceive(Handle:socket, String:receiveData[], const dataSize, any:
 
 public OnSocketDisconnected(Handle:socket, any:map) 
 {
-	CloseHandle(socket);
+    CloseHandle(socket);
 }
 
 public OnSocketError(Handle:socket, const errorType, const errorNum, any:map) 
 {
 #if DEBUG
-	PrintToChatAll("\x01Socket error \x05%d\x01 (errno \x05%d\x01)", errorType, errorNum);
+    PrintToChatAll("\x01Socket error \x05%d\x01 (errno \x05%d\x01)", errorType, errorNum);
 #endif
-	LogError("socket error %d (errno %d)", errorType, errorNum);
-	CloseHandle(socket);
+    LogError("socket error %d (errno %d)", errorType, errorNum);
+    CloseHandle(socket);
 }
 
 SetTankSpawn(Float:flow)
