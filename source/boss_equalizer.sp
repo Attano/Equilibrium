@@ -6,7 +6,7 @@
 #include <bosspercent>
 #include <readyup>
 
-#define DEBUG   1
+#define DEBUG   0
 
 /** 
     [!] Tested on Linux only
