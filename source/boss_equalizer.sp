@@ -23,7 +23,7 @@ new Handle:hVote;
 new Float:fTankSpawns[5];
 new Float:fWitchSpawns[5];
 
-new bool:bVotePassed;
+new bool:bStaticSpawnsActive;
 
 public Plugin:myinfo =
 {
@@ -42,7 +42,7 @@ public OnPluginStart()
 
 public Action:Vote(client, args) 
 {
-    if (bVotePassed)
+    if (bStaticSpawnsActive)
     {
         PrintToChat(client, "\x01[\x04BossEQ\x01] Static spawns already applied! If it's a new game, reload the config by typing \x03!rmatch\x01");
         return Plugin_Handled;
@@ -113,7 +113,6 @@ public VoteResultHandler(Handle:vote, num_votes, num_clients, const client_info[
                 DisplayBuiltinVotePass(vote, "Applying custom boss spawns...");
                 PrintToChatAll("\x01[\x04BossEQ\x01] Vote passed! Applying custom boss spawns...");
                 DownloadAndSaveStaticSpawns();
-                bVotePassed = true;
                 return;
             }
         }
@@ -128,7 +127,7 @@ public OnRoundStart()
 
 public Action:RewriteBossFlows(Handle:timer)
 {
-    if (!InSecondHalfOfRound())
+    if (bStaticSpawnsActive && !InSecondHalfOfRound())
     {
         SetTankSpawn(fTankSpawns[L4D2_GetMapNumber()]);
         SetWitchSpawn(fWitchSpawns[L4D2_GetMapNumber()]);
@@ -195,6 +194,7 @@ public OnSocketReceive(Handle:socket, String:receiveData[], const dataSize, any:
     for (new i = 0; i < 5; i++) PrintToChatAll("\x01Map \x05%i\x01 -- Tank: \x05%f\x01, Witch: \x05%f\x01", (i + 1), fTankSpawns[i], fWitchSpawns[i]);
 #endif
 
+    bStaticSpawnsActive = true;
     OnRoundStart(); // apply new spawns for the current map without restarting it
 }
 
