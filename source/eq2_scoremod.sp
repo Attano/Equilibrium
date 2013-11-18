@@ -44,7 +44,7 @@ public Plugin:myinfo =
     name = "L4D2 Equilibrium 2.0 Scoring System",
     author = "Visor",
     description = "Custom scoring system, designed for Equilibrium 2.0",
-    version = "1.3",
+    version = "1.4",
     url = "https://github.com/Attano/Equilibrium"
 };
 
@@ -231,7 +231,7 @@ public Action:L4D2_OnEndVersusModeRound(bool:countSurvivors)
     new team = InSecondHalfOfRound();
     new iSurvivalMultiplier = GetUprightSurvivors();    // I don't know how reliable countSurvivors is and I'm too lazy to test
     fSurvivorBonus[team] = GetSurvivorHealthBonus() + GetSurvivorDamageBonus();
-    if (iSurvivalMultiplier > 0 && fSurvivorBonus[team] >= 1.0)
+    if (iSurvivalMultiplier > 0 && RoundToFloor(fSurvivorBonus[team] / iSurvivalMultiplier) >= 1.0)
     {
         SetConVarInt(hCvarSurvivalBonus, RoundToFloor(fSurvivorBonus[team] / iSurvivalMultiplier));
         fSurvivorBonus[team] = float(GetConVarInt(hCvarSurvivalBonus) * iSurvivalMultiplier);    // workaround for the discrepancy caused by RoundToFloor()
@@ -303,11 +303,12 @@ Float:GetSurvivorHealthBonus()
 
 Float:GetSurvivorDamageBonus()
 {
-    new Float:fDamageBonus = (fMapTempHealthBonus - float(iLostTempHealth[InSecondHalfOfRound()])) * fTempHpWorth;
+    new survivalMultiplier = GetUprightSurvivors();
+    new Float:fDamageBonus = (fMapTempHealthBonus - float(iLostTempHealth[InSecondHalfOfRound()])) * fTempHpWorth / iTeamSize * survivalMultiplier;
 #if EQSM_DEBUG
-    PrintToChatAll("\x01Adding temp hp bonus: \x05%.1f\x01 (eligible survivors: \x05%d\x01)", fTempHealthBonus, GetUprightSurvivors());
+    PrintToChatAll("\x01Adding temp hp bonus: \x05%.1f\x01 (eligible survivors: \x05%d\x01)", fDamageBonus, survivalMultiplier);
 #endif
-    return fDamageBonus > 0.0 && GetUprightSurvivors() > 0 ? fDamageBonus : 0.0;
+    return fDamageBonus;
 }
 
 Float:CalculateBonusPercent(Float:score, Float:maxbonus = -1.0)
