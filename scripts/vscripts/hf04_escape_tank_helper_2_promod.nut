@@ -1,5 +1,5 @@
 // Once the tank dies on Haunted Forest finale,
-// this onslaught script is run to verify common limit doesn't increase.
+// the onslaught script is run again to verify common limit doesn't increase
 
 tanks <-{
 	tank1 = "models/infected/hulk.mdl",

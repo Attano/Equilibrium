@@ -1,5 +1,3 @@
-// Suicide Blitz Finale
-
 DirectorOptions <-
 {
 	//Horde from the Front.

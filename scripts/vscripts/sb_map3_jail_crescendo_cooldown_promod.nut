@@ -1,5 +1,3 @@
-// Suicide Blitz Map 3
-
 Msg("Resuming Normal Map3 Script\n");
 
 local SPAWN_ANYWHERE = 0 

@@ -1,5 +1,3 @@
-// Suicide Blitz Map 2
-
 Msg("Initiating Riverwalk Script\n");
 
 DirectorOptions <-

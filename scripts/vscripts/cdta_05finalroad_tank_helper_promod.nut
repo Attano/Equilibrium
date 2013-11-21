@@ -1,5 +1,4 @@
 // Used to fix Detour Ahead's Gauntlet Finale.
-// The tank will now spawn in the same place for boths teams.
 // Refer to the corresponding stripper file.
 
 // For Detour Ahead, we consider a Y coord higher than -5031 to be "pushing the tank".
