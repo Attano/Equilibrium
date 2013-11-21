@@ -1,3 +1,5 @@
+// Used to remove natural hordes from Detour Ahead Map 1
+
 Msg("DA1 Ambient\n");
 
 DirectorOptions <-

@@ -1,6 +1,6 @@
 // Used to fix Detour Ahead's Gauntlet Finale.
 // Values were decided based on values in cdta_05finalroadversus.nut + 
-// tweaks to make it more balanced for competition.
+// tweaks to make it more balanced for competition and even for both teams.
 function StartGauntlet()
 {
 	DirectorOptions <-

@@ -1,3 +1,5 @@
+// Suicide Blitz Map 1
+
 Msg("sb_map1_default\n");
 
 DirectorOptions <-

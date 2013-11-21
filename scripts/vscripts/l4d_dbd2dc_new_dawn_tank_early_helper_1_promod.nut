@@ -1,5 +1,6 @@
 // Used to prevent early tanks on Dead Before Dawn:DC finale
-// from getting stuck behind the finale start gate
+// from getting stuck behind the finale start gate.
+// This works in conjunction with the l4d_dbd2dc_new_dawn_tank_early_helper_2_promod.nut script.
 
 tanks <-{
 	tank1 = "models/infected/hulk.mdl",
