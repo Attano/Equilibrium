@@ -180,7 +180,7 @@ public Action:OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &damage
         return Plugin_Continue;
 
 #if EQSM_DEBUG
-    if (GetSurvivorTemporaryHealth(victim) > 0) PrintToChatAll("\x01\x04%N\x01 has \x05%d\x01 temp HP now(damage: \x03%.1f\x01)", victim, GetSurvivorTemporaryHealth(victim), damage);
+    if (GetSurvivorTemporaryHealth(victim) > 0) PrintToChatAll("\x04%N\x01 has \x05%d\x01 temp HP now(damage: \x03%.1f\x01)", victim, GetSurvivorTemporaryHealth(victim), damage);
 #endif
     iTempHealth[victim] = GetSurvivorTemporaryHealth(victim);
 
@@ -308,7 +308,7 @@ Float:GetSurvivorDamageBonus()
 #if EQSM_DEBUG
     PrintToChatAll("\x01Adding temp hp bonus: \x05%.1f\x01 (eligible survivors: \x05%d\x01)", fDamageBonus, survivalMultiplier);
 #endif
-    return fDamageBonus;
+    return (fDamageBonus > 0.0 && survivalMultiplier > 0) ? fDamageBonus : 0.0;
 }
 
 Float:CalculateBonusPercent(Float:score, Float:maxbonus = -1.0)

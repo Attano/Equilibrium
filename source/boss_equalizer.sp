@@ -156,8 +156,8 @@ public OnSocketConnected(Handle:socket, any:map)
     ResetPack(map);
     ReadPackString(map, sCurrentMap, sizeof(sCurrentMap));
 
-    decl String:sRequestStr[100];
-    Format(sRequestStr, sizeof(sRequestStr), "GET /%s?%s HTTP/1.0\r\nHost: %s\r\nConnection: close\r\n\r\n", DB_PATH, DB_HOST, sCurrentMap);
+    decl String:sRequestStr[256];
+    Format(sRequestStr, sizeof(sRequestStr), "GET /%s?%s HTTP/1.0\r\nHost: %s\r\nConnection: close\r\n\r\n", DB_PATH, sCurrentMap, DB_HOST);
     SocketSend(socket, sRequestStr);
 }
 
