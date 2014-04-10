@@ -29,6 +29,7 @@
 >!bonus lite | [EQSM :: R#1] Bonus: 556 &lt;69.5%&gt; | *Same as 1st round*  
 
 > - Jockeys can now be skeeted with shotguns. The blast must inflict no less than 60% damage out of the Jockey's total health. This value constitutes **195 HP**.
+> - EQ now uses Pro Mod HR 3.6 Stripper changes, with the exception of ladder choke nerfs. Those are removed.
 > - Fixed survivor M2 functionality against hunters. The chance of a deadstop has now been completely eliminated. Also M2 will function properly on hunters who have capped survivors.
 > - Silent Hunter wallkicks are now blocked.
 > - Removed melee weapons limit per team.
