@@ -35,7 +35,10 @@
 > - Removed melee weapons limit per team.
 > - Charger scratches will now deal only 6 dmg to capped victims.
 > - Equalized spitter damage and acid lifetime.
-> - Increased godframes for all SI classes by **0.1s**.
+> - Completely removed Spitter godframes.
+> - Lowered the Survivor immunity time against fresh spit(technically not part of the godframe system)
+> - The Spitter now deals **48** dmg per spit / **8** per second.
+> - Increased godframes for all SI classes(except Spitter) by **0.1s**.
 > - Fixed second team having different SI spawns on round start.
 > - Mapinfo tweaked: a couple of custom distance/bonus edits.
 > - Replaced `Survivor MVP` with the new `L4D2 Play Stats`.
