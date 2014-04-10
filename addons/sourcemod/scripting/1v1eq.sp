@@ -19,7 +19,7 @@ new const String:SI_Names[][] =
 };
 
 new Handle:hCvarDmgThreshold;
-//add blade to contributors for eq
+
 public Plugin:myinfo =
 {
 	name = "1v1 EQ",
