@@ -12,7 +12,8 @@ public Plugin:myinfo =
 	name        = "L4D2 Drop Secondary",
 	author      = "Jahze, Visor",
 	version     = "2.0",
-	description = "Survivor players will drop their secondary weapon when they die"
+	description = "Survivor players will drop their secondary weapon when they die",
+	url         = "https://github.com/Attano/Equilibrium"
 };
 
 public OnPluginStart() 
