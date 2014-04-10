@@ -1,0 +1,15 @@
+// Disable ReadyUp & Stuff
+l4d_ready_enabled 0
+sm_resetstringcount
+
+// Unlock Plugins and reload defaults
+confogl_resetclientcvars
+confogl_resetcvars
+sm plugins load_unlock
+sm plugins unload_all
+sm plugins refresh
+
+// Reset Default Common Limit
+sm_cvar z_common_limit 30
+
+sm_restartmap
