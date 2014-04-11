@@ -5,7 +5,7 @@
 #include <l4d2d_timers>
 
 #define GODFRAME_TICKS	4
-#define MAX_TICKS		28
+#define MAX_TICKS	28
 
 new Handle:hCvarDamagePerTick;
 new Handle:hPuddles;
@@ -30,7 +30,7 @@ public OnPluginStart()
 
 public OnConfigsExecuted()
 {
-    damagePerTick = GetConVarFloat(hCvarDamagePerTick);
+    	damagePerTick = GetConVarFloat(hCvarDamagePerTick);
 }
 
 public OnClientPutInServer(client)
