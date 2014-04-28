@@ -62,12 +62,12 @@ public Action:CommitSuicideCmd(client, args)
 
 	if (error[0] != EOS)
 	{
-	        CPrintToChat(client, "<{olive}ZombieSuicide{default}> %s", error);
-	        return Plugin_Handled;
+		CPrintToChat(client, "<{olive}ZombieSuicide{default}> %s", error);
+		return Plugin_Handled;
 	}
 
 	ForcePlayerSuicide(client);
-	CPrintToChatAll("<{olive}ZombieSuicide{default}> {red}%N{default}[{green}%s{default}] has committed a suicide!", client, L4D2SI_Names[GetInfectedClass(client)-1]);
+	CPrintToChatAll("<{olive}ZombieSuicide{default}> {red}%N{default}[{green}%s{default}] has committed suicide!", client, L4D2SI_Names[GetInfectedClass(client)-1]);
 	return Plugin_Continue;
 }
 

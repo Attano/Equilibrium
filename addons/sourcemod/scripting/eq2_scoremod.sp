@@ -147,7 +147,7 @@ public OnRoundStart()
 
 public Action:CmdBonus(client, args)
 {
-	if (bRoundOver)
+	if (bRoundOver || !client)
 		return Plugin_Handled;
 
 	decl String:sCmdType[64];
@@ -159,23 +159,23 @@ public Action:CmdBonus(client, args)
 	{
 		if (InSecondHalfOfRound())
 		{
-			ReplyToCommand(client, "\x01[\x04EQSM\x01 :: R\x03#1\x01] Bonus: \x05%d\x01/\x05%d\x01 <\x03%.1f%%\x01> [%s]", RoundToFloor(fSurvivorBonus[0]), RoundToFloor(fMapBonus), CalculateBonusPercent(fSurvivorBonus[0]), sSurvivorState[0]);
+			PrintToChat(client, "\x01[\x04EQSM\x01 :: R\x03#1\x01] Bonus: \x05%d\x01/\x05%d\x01 <\x03%.1f%%\x01> [%s]", RoundToFloor(fSurvivorBonus[0]), RoundToFloor(fMapBonus), CalculateBonusPercent(fSurvivorBonus[0]), sSurvivorState[0]);
 		}
-		ReplyToCommand(client, "\x01[\x04EQSM\x01 :: R\x03#%i\x01] Bonus: \x05%d\x01 <\x03%.1f%%\x01> [HB: \x05%d\x01 <\x03%.1f%%\x01> | DB: \x05%d\x01 <\x03%.1f%%\x01>]", InSecondHalfOfRound() + 1, RoundToFloor(fHealthBonus + fDamageBonus), CalculateBonusPercent(fHealthBonus + fDamageBonus, fMapHealthBonus + fMapDamageBonus), RoundToFloor(fHealthBonus), CalculateBonusPercent(fHealthBonus, fMapHealthBonus), RoundToFloor(fDamageBonus), CalculateBonusPercent(fDamageBonus, fMapDamageBonus));
+		PrintToChat(client, "\x01[\x04EQSM\x01 :: R\x03#%i\x01] Bonus: \x05%d\x01 <\x03%.1f%%\x01> [HB: \x05%d\x01 <\x03%.1f%%\x01> | DB: \x05%d\x01 <\x03%.1f%%\x01>]", InSecondHalfOfRound() + 1, RoundToFloor(fHealthBonus + fDamageBonus), CalculateBonusPercent(fHealthBonus + fDamageBonus, fMapHealthBonus + fMapDamageBonus), RoundToFloor(fHealthBonus), CalculateBonusPercent(fHealthBonus, fMapHealthBonus), RoundToFloor(fDamageBonus), CalculateBonusPercent(fDamageBonus, fMapDamageBonus));
 		// [EQSM :: R#1] Bonus: 556 <69.5%> [HB: 439 <73.1%> | DB: 117 <58.5%>]
 	}
 	else if (StrEqual(sCmdType, "lite"))
 	{
-		ReplyToCommand(client, "\x01[\x04EQSM\x01 :: R\x03#%i\x01] Bonus: \x05%d\x01 <\x03%.1f%%\x01>", InSecondHalfOfRound() + 1, RoundToFloor(fHealthBonus + fDamageBonus), CalculateBonusPercent(fHealthBonus + fDamageBonus, fMapHealthBonus + fMapDamageBonus));
+		PrintToChat(client, "\x01[\x04EQSM\x01 :: R\x03#%i\x01] Bonus: \x05%d\x01 <\x03%.1f%%\x01>", InSecondHalfOfRound() + 1, RoundToFloor(fHealthBonus + fDamageBonus), CalculateBonusPercent(fHealthBonus + fDamageBonus, fMapHealthBonus + fMapDamageBonus));
 		// [EQSM :: R#1] Bonus: 556 <69.5%>
 	}
 	else
 	{
 		if (InSecondHalfOfRound())
 		{
-			ReplyToCommand(client, "\x01[\x04EQSM\x01 :: R\x03#1\x01] Bonus: \x05%d\x01 <\x03%.1f%%\x01>", RoundToFloor(fSurvivorBonus[0]), CalculateBonusPercent(fSurvivorBonus[0]));
+			PrintToChat(client, "\x01[\x04EQSM\x01 :: R\x03#1\x01] Bonus: \x05%d\x01 <\x03%.1f%%\x01>", RoundToFloor(fSurvivorBonus[0]), CalculateBonusPercent(fSurvivorBonus[0]));
 		}
-		ReplyToCommand(client, "\x01[\x04EQSM\x01 :: R\x03#%i\x01] Bonus: \x05%d\x01 <\x03%.1f%%\x01> [HB: \x03%.0f%%\x01 | DB: \x03%.0f%%\x01]", InSecondHalfOfRound() + 1, RoundToFloor(fHealthBonus + fDamageBonus), CalculateBonusPercent(fHealthBonus + fDamageBonus, fMapHealthBonus + fMapDamageBonus), CalculateBonusPercent(fHealthBonus, fMapHealthBonus), CalculateBonusPercent(fDamageBonus, fMapDamageBonus));
+		PrintToChat(client, "\x01[\x04EQSM\x01 :: R\x03#%i\x01] Bonus: \x05%d\x01 <\x03%.1f%%\x01> [HB: \x03%.0f%%\x01 | DB: \x03%.0f%%\x01]", InSecondHalfOfRound() + 1, RoundToFloor(fHealthBonus + fDamageBonus), CalculateBonusPercent(fHealthBonus + fDamageBonus, fMapHealthBonus + fMapDamageBonus), CalculateBonusPercent(fHealthBonus, fMapHealthBonus), CalculateBonusPercent(fDamageBonus, fMapDamageBonus));
 		// [EQSM :: R#1] Bonus: 556 <69.5%> [HB: 73% | DB: 58%]
 	}
 	return Plugin_Handled;
@@ -183,11 +183,11 @@ public Action:CmdBonus(client, args)
 
 public Action:CmdMapInfo(client, args)
 {
-	ReplyToCommand(client, "\x01[\x04EQSM\x01 :: \x03%iv%i\x01] Map Info", iTeamSize, iTeamSize);
-	ReplyToCommand(client, "\x01Distance: \x05%d\x01", iMapDistance);
-	ReplyToCommand(client, "\x01Bonus: \x05%d\x01 <\x03100.0%%\x01>", RoundToFloor(fMapBonus));
-	ReplyToCommand(client, "\x01Health Bonus: \x05%d\x01 <\x03%.1f%%\x01>", RoundToFloor(fMapHealthBonus), CalculateBonusPercent(fMapHealthBonus));
-	ReplyToCommand(client, "\x01Damage Bonus: \x05%d\x01 <\x03%.1f%%\x01>", RoundToFloor(fMapDamageBonus), CalculateBonusPercent(fMapDamageBonus));
+	PrintToChat(client, "\x01[\x04EQSM\x01 :: \x03%iv%i\x01] Map Info", iTeamSize, iTeamSize);
+	PrintToChat(client, "\x01Distance: \x05%d\x01", iMapDistance);
+	PrintToChat(client, "\x01Bonus: \x05%d\x01 <\x03100.0%%\x01>", RoundToFloor(fMapBonus));
+	PrintToChat(client, "\x01Health Bonus: \x05%d\x01 <\x03%.1f%%\x01>", RoundToFloor(fMapHealthBonus), CalculateBonusPercent(fMapHealthBonus));
+	PrintToChat(client, "\x01Damage Bonus: \x05%d\x01 <\x03%.1f%%\x01>", RoundToFloor(fMapDamageBonus), CalculateBonusPercent(fMapDamageBonus));
 	// [EQSM :: 4v4] Map Info
 	// Distance: 400
 	// Bonus: 800 <100.0%>

@@ -70,7 +70,7 @@ public Action:OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &damage
 	if (!IsJockey(victim) || !IsSurvivor(attacker) || IsFakeClient(attacker))
 		return Plugin_Continue;
 
-	if (IsAttachable(victim) && IsShotgun(weapon))
+	if (!HasJockeyTarget(victim) && IsAttachable(victim) && IsShotgun(weapon))
 	{
 		inflictedDamage[victim][attacker] += damage;
 		if (inflictedDamage[victim][attacker] >= jockeySkeetDmg)
@@ -119,6 +119,12 @@ bool:IsJockey(client)
 		&& GetClientTeam(client) == 3
 		&& GetEntProp(client, Prop_Send, "m_zombieClass") == 5
 		&& GetEntProp(client, Prop_Send, "m_isGhost") != 1);
+}
+
+bool:HasJockeyTarget(infected)
+{
+	new client = GetEntDataEnt2(infected, 16124);
+	return (IsSurvivor(client) && IsPlayerAlive(client));
 }
 
 // A function conveniently named & implemented after the Jockey's ability of

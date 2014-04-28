@@ -1,12 +1,12 @@
-#![EQ](http://31.186.250.11/tmp/eq.png)
+#Equilibrium
 **Equilibrium** is a competitive configuration for Left 4 Dead 2 which was initiated as a major revolutionary step after *Confogl Fresh*. Its intention is to provide competitive yet challenging play, where play-facilitating mechanics which existed in Confogl Fresh(and still exist in Pro Mod) are no longer present. Thus there is a greater requirement to use better input and tactical thought in order to succeed in EQ, reinforcing the viewpoint that teams and players should be tested thoroughly in their skill and teamwork, and made to earn their points and victories in a truly 'competitive' sense.
 
 ###[ Info ]
 **Current version:**      2.1  
-**EQ2.x Developer:**      ![RO](http://31.186.250.11/tmp/ro_flag.png) Visor   
-**Pre-EQ2.0 Developer:**  ![UK](http://31.186.250.11/tmp/uk_flag.png) Jahze (inactive) [ [legacy repo](http://github.com/Jahze/Equilibrium) / [legacy changelog](http://github.com/Jahze/Equilibrium/blob/master/CHANGELOG.txt) ]  
-**Ideas:**                Jahze, ![UK](http://31.186.250.11/tmp/uk_flag.png) Dragon, Visor, ![UK](http://31.186.250.11/tmp/uk_flag.png) Battle  
-**EQ Plugins:**           Visor, Jahze, ![NL](http://31.186.250.11/tmp/nl_flag.png) Sir  
+**EQ2.x Developer:**      Visor   
+**Pre-EQ2.0 Developer:**  Jahze (inactive) [ [legacy repo](http://github.com/Jahze/Equilibrium) / [legacy changelog](http://github.com/Jahze/Equilibrium/blob/master/CHANGELOG.txt) ]  
+**Ideas:**                Jahze, Dragon, Visor, Battle  
+**EQ Plugins:**           Visor, Jahze, Sir  
 **Base plugins:**         CanadaRox, ProdigySim, Tabun, Vintik, Stabby, Blade, CircleSquared, Jacob, Grego, purpletreefactory, epilimic, Arti, Raecher, Xan, Griffin  
 **Stripper:**             Tabun, NF, EsToOpi, Jacob, Blade, Stabby, CircleSquared
 
@@ -20,7 +20,7 @@
 > **4v4 EQ 2.1**
 
 > - Refined the scoring system. Health Bonus will now depend on the number of Survivors alive, same as Damage Bonus.
-> - Updated the **!bonus** command (mirrors: *!health*, *!damage*)
+> - Updated the **!bonus** command (mirrors: *!health*, *!damage*). Aside from the below changes, calling the bonus commands via console(**sm_health** etc.) will now result in chat replies instead of console replies.
 
 >Command | 1st Round Output | 2nd Round Output  
 >--- | ---  | ---  
@@ -41,6 +41,11 @@
 > - Increased godframes for all SI classes(except Spitter) by **0.1s**.
 > - All SI are now able to break doors with a single scratch instead of 3. Hunters are also able to pounce through a non-damaged door, instantly breaking it.
 > - Fixed second team having different SI spawns on round start.
+> - The following campaigns will have the flow Tank enabled, and the first event Tank disabled on their respective finales: (all other finales will keep their flow Tank disabled)
+> 	- Swamp Fever
+> 	- No Mercy
+> 	- Death Toll
+> 	- Blood Harvest
 > - Mapinfo tweaked: a couple of custom distance/bonus edits.
 > - Replaced `Survivor MVP` with the new `L4D2 Play Stats`.
 > - Per numerous requests, replaced audial bacteria sounds for initial spawns with chat prints.
@@ -52,8 +57,8 @@
 > - Replaced `L4D2 Spitter Manager` with `L4D2 No Spitter During Tank` due to the former's buggy nature.
 > - Updated `Caster Addons` plugin to function properly after map transitions.
 > - Reworked `L4D2 Drop Secondary` plugin, removed error spam and made it more reliable.
-> - Removed the deprecated `Boss Spawns Equalizer`
-> - Removed the deprecated `L4D2 Logger`.
+> - Updated the `Boss Spawns Equalizer` with a new remote host.
+> - Updated the `L4D2 Logger` with the [new version](http://logger.l4dpromod.com/).
 > - Removed useless VScripts for L4D1 maps. 
 
 > **3v3 EQ 2.1**  
