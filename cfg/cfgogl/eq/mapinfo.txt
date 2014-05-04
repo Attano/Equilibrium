@@ -1494,18 +1494,42 @@
 	}
 	"l4d2_fallindeath01"
 	{
+		"start_point"		"214.333710 -1407.492676 222.812622"
+		"end_point"         "-4109.611328 4095.184082 374.066864"
+        "start_dist"        "100.000000"
+        "start_extra_dist"  "150.000000"
+        "end_dist"          "100.000000"
+		"max_distance"      "500"
 		"max_distance"		"500"
 	}
+	
 	"l4d2_fallindeath02"
 	{
+		"start_point"		"-4109.611328 342.256897 382.066864"
+		"end_point"         "11485.612305 7981.953613 506.440613"
+        "start_dist"        "100.000000"
+        "start_extra_dist"  "175.000000"
+        "end_dist"          "50.000000"
 		"max_distance"		"500"
 	}
 	"l4d2_fallindeath03"
 	{
+		"start_point"		"-4568.857910 116.963791 59.737034"
+		"end_point"         "5344.410645 -3423.376465 1587.031250"
+        "start_dist"        "50.000000"
+        "start_extra_dist"  "350.000000"
+        "end_dist"          "50.000000"
 		"max_distance"		"600"
 	}
 	"l4d2_fallindeath04"
 	{
+		"start_point"		"-642.819702 -1240.376587 -960.968750"
+		"end_point"         "-99.351852 922.977234 326.031250"
+        "start_dist"        "50.000000"
+        "start_extra_dist"  "325.000000"
+        "end_dist"          "50.000000"
 		"max_distance"		"800"
-	}	
+		"tank_ban_flow_min" "0"
+		"tank_ban_flow_max" "40"
+	}
 }
