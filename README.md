@@ -2,13 +2,27 @@
 **Equilibrium** is a competitive configuration for Left 4 Dead 2 which was initiated as a major revolutionary step after *Confogl Fresh*. Its intention is to provide competitive yet challenging play, where play-facilitating mechanics which existed in Confogl Fresh(and still exist in Pro Mod) are no longer present. Thus there is a greater requirement to use better input and tactical thought in order to succeed in EQ, reinforcing the viewpoint that teams and players should be tested thoroughly in their skill and teamwork, and made to earn their points and victories in a truly 'competitive' sense.
 
 ###[ Info ]
-**Current version:**      2.1  
-**EQ2.x Developer:**      Visor   
-**Pre-EQ2.0 Developer:**  Jahze (inactive) [ [legacy repo](http://github.com/Jahze/Equilibrium) / [legacy changelog](http://github.com/Jahze/Equilibrium/blob/master/CHANGELOG.txt) ]  
-**Ideas:**                Jahze, Dragon, Visor, Battle  
-**EQ Plugins:**           Visor, Jahze, Sir  
-**Base plugins:**         CanadaRox, ProdigySim, Tabun, Vintik, Stabby, Blade, CircleSquared, Jacob, Grego, purpletreefactory, epilimic, Arti, Raecher, Xan, Griffin  
+**Current version:**      2.1
+**EQ2.x Developer:**      Visor
+**Pre-EQ2.0 Developer:**  Jahze (inactive) [ [legacy repo](http://github.com/Jahze/Equilibrium) / [legacy changelog](http://github.com/Jahze/Equilibrium/blob/master/CHANGELOG.txt) ]
+**Ideas:**                Jahze, Dragon, Visor, Battle
+**EQ Plugins:**           Visor, Jahze, Sir
+**Base plugins:**         CanadaRox, ProdigySim, Tabun, Vintik, Stabby, Blade, CircleSquared, Jacob, Grego, purpletreefactory, epilimic, Arti, Raecher, Xan, Griffin
 **Stripper:**             Tabun, NF, EsToOpi, Jacob, Blade, Stabby, CircleSquared
+
+
+###[ License ]
+SourcePawn is Copyright (C) 2006-2008 AlliedModders LLC.  All rights reserved.
+SourceMod is Copyright (C) 2006-2008 AlliedModders LLC.  All rights reserved.
+Pawn and SMALL are Copyright (C) 1997-2008 ITB CompuPhase.
+Source is Copyright (C) Valve Corporation.
+All trademarks are property of their respective owners.
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ###[ Changelog ]
 
@@ -22,11 +36,11 @@
 > - Refined the scoring system. Health Bonus will now depend on the number of Survivors alive, same as Damage Bonus.
 > - Updated the **!bonus** command (mirrors: *!health*, *!damage*). Aside from the below changes, calling the bonus commands via console(**sm_health** etc.) will now result in chat replies instead of console replies.
 
->Command | 1st Round Output | 2nd Round Output  
->--- | ---  | ---  
->!bonus | [EQSM :: R#1] Bonus: 556 &lt;69.5%&gt; [HB: 73% I DB: 58%] | [EQSM :: R#1] Bonus: 420 &lt;52.5%&gt;<br/>[EQSM :: R#2] Bonus: 556 &lt;69.5%&gt; [HB: 73% I DB: 58%]  
->!bonus full | [EQSM :: R#1] Bonus: 556 &lt;69.5%> [HB: 439 &lt;73.1%> I DB: 117 &lt;58.5%&gt;] | [EQSM :: R#1] Bonus: 420/800 &lt;52.5%&gt; [4/4]<br/>[EQSM :: R#2] Bonus: 556 &lt;69.5%&gt; [HB: 439 &lt;73.1%&gt; I DB: 117 &lt;58.5%&gt;]  
->!bonus lite | [EQSM :: R#1] Bonus: 556 &lt;69.5%&gt; | *Same as 1st round*  
+>Command | 1st Round Output | 2nd Round Output
+>--- | ---  | ---
+>!bonus | [EQSM :: R#1] Bonus: 556 &lt;69.5%&gt; [HB: 73% I DB: 58%] | [EQSM :: R#1] Bonus: 420 &lt;52.5%&gt;<br/>[EQSM :: R#2] Bonus: 556 &lt;69.5%&gt; [HB: 73% I DB: 58%]
+>!bonus full | [EQSM :: R#1] Bonus: 556 &lt;69.5%> [HB: 439 &lt;73.1%> I DB: 117 &lt;58.5%&gt;] | [EQSM :: R#1] Bonus: 420/800 &lt;52.5%&gt; [4/4]<br/>[EQSM :: R#2] Bonus: 556 &lt;69.5%&gt; [HB: 439 &lt;73.1%&gt; I DB: 117 &lt;58.5%&gt;]
+>!bonus lite | [EQSM :: R#1] Bonus: 556 &lt;69.5%&gt; | *Same as 1st round*
 
 > - Jockeys can now be skeeted with shotguns. The blast must inflict no less than 60% damage out of the Jockey's total health. This value constitutes **195 HP**.
 > - EQ now uses Pro Mod HR 3.6 Stripper changes, with the exception of ladder choke nerfs. Those are removed.
@@ -59,9 +73,9 @@
 > - Reworked `L4D2 Drop Secondary` plugin, removed error spam and made it more reliable.
 > - Updated the `Boss Spawns Equalizer` with a new remote host.
 > - Updated the `L4D2 Logger` with the [new version](http://logger.l4dpromod.com/).
-> - Removed useless VScripts for L4D1 maps. 
+> - Removed useless VScripts for L4D1 maps.
 
-> **3v3 EQ 2.1**  
+> **3v3 EQ 2.1**
 > *All 4v4 changes, except:*
 
 > - Only Hunters, Smokers, Jockeys and Chargers
@@ -70,7 +84,7 @@
 > - Distance points freeze upon Tank / Witch spawning. This is to discourage rushing.
 > - Survivors who managed to chip their attacker before getting capped will now be able to see how much damage they've managed to inflict.
 
-> **2v2 EQ 2.1**  
+> **2v2 EQ 2.1**
 > *All 4v4 and 3v3 changes, except:*
 
 > - Only Hunters, Jockeys and Chargers
@@ -161,17 +175,17 @@
 
 ####October 3, 2013
 
-> **NOTE:** *Warcelona campaign issues fixes and Global Boss Coordinates Equalizer are still work in progress. Check later for updates.*  
+> **NOTE:** *Warcelona campaign issues fixes and Global Boss Coordinates Equalizer are still work in progress. Check later for updates.*
 > **NOTE:** *3v3 and 2v2 configs are still being worked on. Please do not install them, for now.*
 
 > - Fixed identation issues in all files
 > - Added missing l4d2_spitter_manager
-> - Added static shotgun spread into the config, with its files and the updated Left4Downtown2 extension. It is NOT the same as the one in Jahze's repo, so update it! It is required for water slowdown and stagger fix plugins.  
+> - Added static shotgun spread into the config, with its files and the updated Left4Downtown2 extension. It is NOT the same as the one in Jahze's repo, so update it! It is required for water slowdown and stagger fix plugins.
 
->Shotgun type | Pellets | Damage | Scatter  
+>Shotgun type | Pellets | Damage | Scatter
 >--- | --- | --- | ---
 >Chrome | 15 | 17 | 3.0
->Pump* | 17 | 15 | 3.5  
+>Pump* | 17 | 15 | 3.5
 >*Pump shotgun is less accurate than chrome*
 > - Slowdown Control plugin has been revised. Now it's using EQ2.0's custom Left4Downtown2 extension as a dependency to handle water slowdown for the Survivors and the Tank. Confogl's own slowdown is turned off, since the new function is much less consuming on higher tickrates.
 > - Added a plugin to remove friendly charger staggers. No more ruined caps!
@@ -214,7 +228,7 @@
 > - Added Modified Unsilent Jockey.
 > - Added Modified Spec Stays Spec
 
-####September 5, 2013  
+####September 5, 2013
 > **Initial commit**
 
 > - 2v2,3v3,4v4 Config Basics prepared.
