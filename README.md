@@ -2,14 +2,13 @@
 **Equilibrium** is a competitive configuration for Left 4 Dead 2 which was initiated as a major revolutionary step after *Confogl Fresh*. Its intention is to provide competitive yet challenging play, where play-facilitating mechanics which existed in Confogl Fresh(and still exist in Pro Mod) are no longer present. Thus there is a greater requirement to use better input and tactical thought in order to succeed in EQ, reinforcing the viewpoint that teams and players should be tested thoroughly in their skill and teamwork, and made to earn their points and victories in a truly 'competitive' sense.
 
 ###[ Info ]
-**Current version:**      2.1
-**EQ2.x Developer:**      Visor
-**Pre-EQ2.0 Developer:**  Jahze (inactive) [ [legacy repo](http://github.com/Jahze/Equilibrium) / [legacy changelog](http://github.com/Jahze/Equilibrium/blob/master/CHANGELOG.txt) ]
-**Ideas:**                Jahze, Dragon, Visor, Battle
-**EQ Plugins:**           Visor, Jahze, Sir
-**Base plugins:**         CanadaRox, ProdigySim, Tabun, Vintik, Stabby, Blade, CircleSquared, Jacob, Grego, purpletreefactory, epilimic, Arti, Raecher, Xan, Griffin
-**Stripper:**             Tabun, NF, EsToOpi, Jacob, Blade, Stabby, CircleSquared
-
+**Current version:**      2.1 
+**EQ2.x Developer:**      Visor 
+**Pre-EQ2.0 Developer:**  Jahze (inactive) [ [legacy repo](http://github.com/Jahze/Equilibrium) / [legacy changelog](http://github.com/Jahze/Equilibrium/blob/master/CHANGELOG.txt) ] 
+**Ideas:**                Jahze, Dragon, Visor, Battle 
+**EQ Plugins:**           Visor, Jahze, Sir 
+**Base plugins:**         CanadaRox, ProdigySim, Tabun, Vintik, Stabby, Blade, CircleSquared, Jacob, Grego, purpletreefactory, epilimic, Arti, Raecher, Xan, Griffin 
+**Stripper:**             Tabun, NF, EsToOpi, Jacob, Blade, Stabby, CircleSquared 
 
 ###[ License ]
 SourcePawn is Copyright (C) 2006-2008 AlliedModders LLC.  All rights reserved.
